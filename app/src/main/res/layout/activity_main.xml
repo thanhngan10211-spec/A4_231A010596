@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_a"
             android:importantForAutofill="no"
-            android:inputType="numberDecimal|numberSigned" />
+             />
 
         <EditText
             android:id="@+id/edtSoB"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_b"
             android:importantForAutofill="no"
-            android:inputType="numberDecimal|numberSigned" />
+             />
 
         <LinearLayout
             android:layout_width="match_parent"

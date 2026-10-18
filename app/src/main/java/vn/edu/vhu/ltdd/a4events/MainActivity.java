@@ -87,7 +87,13 @@ public class MainActivity extends AppCompatActivity {
             b = Double.parseDouble(chuoiB);
         } catch (NumberFormatException e) {
             Log.e(TAG, "Dữ liệu nhập không phải số: '" + chuoiA + "', '" + chuoiB + "'", e);
-            Toast.makeText(this, R.string.err_not_number, Toast.LENGTH_SHORT).show();
+
+            // ---> THÊM TOAST RIÊNG CHO LỖI 4 (MÁY TÍNH) Ở ĐÂY <---
+            Toast.makeText(this, "Lỗi 4: Vui lòng nhập đúng định dạng số ở máy tính!", Toast.LENGTH_SHORT).show();
+
+            // Hoặc nếu bạn muốn dùng chuỗi từ strings.xml:
+            // Toast.makeText(this, R.string.err_not_number, Toast.LENGTH_SHORT).show();
+
             return;
         }
 
