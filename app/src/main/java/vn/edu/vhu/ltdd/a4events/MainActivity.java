@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.ArrayList;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         edtChieuCao = findViewById(R.id.edtChieuCao);
         tvBmi = findViewById(R.id.tvBmi);
         tvPhanLoai = findViewById(R.id.tvPhanLoai);
+        tvLichSu = findViewById(R.id.tvLichSu);
 
         Button btnCong = findViewById(R.id.btnCong);
         Button btnTru = findViewById(R.id.btnTru);
@@ -115,7 +117,20 @@ public class MainActivity extends AppCompatActivity {
         tvKetQua.setText(String.format(Locale.getDefault(), "%.2f %c %.2f = %.2f",
                 a, phepToan, b, ketQua));
         Log.d(TAG, "Phép tính: " + a + " " + phepToan + " " + b + " = " + ketQua);
-    }
+
+        String ketQuaHienTai = String.format(Locale.getDefault(), "%.2f %c %.2f = %.2f", a, phepToan, b, ketQua);
+
+        danhSachLichSu.add(0, ketQuaHienTai);
+
+        if (danhSachLichSu.size() > 5) {
+            danhSachLichSu.remove(danhSachLichSu.size() - 1);
+        }
+
+        StringBuilder sb = new StringBuilder("Lịch sử gần đây:\n");
+        for (String item : danhSachLichSu) {
+            sb.append("- ").append(item).append("\n");
+        }
+        tvLichSu.setText(sb.toString());}
 
     private void xoaTrang() {
         edtSoA.setText("");
@@ -187,6 +202,27 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (NumberFormatException e) {
             Toast.makeText(this, R.string.err_not_number, Toast.LENGTH_SHORT).show();
+        }
+    }
+    private ArrayList<String> danhSachLichSu = new ArrayList<>();
+    private TextView tvLichSu;
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("KEY_LICHSU", danhSachLichSu);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ArrayList<String> savedList = savedInstanceState.getStringArrayList("KEY_LICHSU");
+        if (savedList != null) {
+            danhSachLichSu = savedList;
+            StringBuilder sb = new StringBuilder("Lịch sử gần đây:\n");
+            for (String item : danhSachLichSu) {
+                sb.append("- ").append(item).append("\n");
+            }
+            tvLichSu.setText(sb.toString());
         }
     }
 }
