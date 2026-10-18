@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         Button btnChia = findViewById(R.id.btnChia);
         Button btnXoa = findViewById(R.id.btnXoa);
         Button btnTinhBmi = findViewById(R.id.btnTinhBmi);
+        Button btnPhanTram = findViewById(R.id.btnPhanTram);
+        Button btnDaoDau = findViewById(R.id.btnDaoDau);
+
+        btnPhanTram.setOnClickListener(v -> tinhToan('%'));
+        btnDaoDau.setOnClickListener(v -> daoDauSoA());
 
         btnCong.setOnClickListener(v -> tinhToan('+'));
         btnTru.setOnClickListener(v -> tinhToan('-'));
@@ -88,12 +93,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             Log.e(TAG, "Dữ liệu nhập không phải số: '" + chuoiA + "', '" + chuoiB + "'", e);
 
-            // ---> THÊM TOAST RIÊNG CHO LỖI 4 (MÁY TÍNH) Ở ĐÂY <---
             Toast.makeText(this, "Lỗi 4: Vui lòng nhập đúng định dạng số ở máy tính!", Toast.LENGTH_SHORT).show();
-
-            // Hoặc nếu bạn muốn dùng chuỗi từ strings.xml:
-            // Toast.makeText(this, R.string.err_not_number, Toast.LENGTH_SHORT).show();
-
             return;
         }
 
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             case '+': ketQua = a + b; break;
             case '-': ketQua = a - b; break;
             case '*': ketQua = a * b; break;
+            case '%': ketQua = a * (b / 100.0); break;
             default:  ketQua = a / b; break;
         }
 
@@ -154,4 +155,39 @@ public class MainActivity extends AppCompatActivity {
         if (bmi < 25) return getString(R.string.bmi_over);
         return getString(R.string.bmi_obese);
     }
+    private void daoDauSoA() {
+        String chuoiA = edtSoA.getText().toString().trim();
+
+        if (chuoiA.isEmpty()) {
+            edtSoA.setError(getString(R.string.err_empty));
+            edtSoA.requestFocus();
+            return;
+        }
+
+        if (chuoiA.equals("-")) {
+            edtSoA.setText("");
+            edtSoA.setError(null);
+            return;
+        }
+
+        try {
+            double val = Double.parseDouble(chuoiA);
+            val = val * -1;
+
+
+            if (val == (long) val) {
+                edtSoA.setText(String.format(Locale.getDefault(), "%d", (long) val));
+            } else {
+                edtSoA.setText(String.format(Locale.getDefault(), "%s", val));
+            }
+
+
+            edtSoA.setSelection(edtSoA.getText().length());
+            edtSoA.setError(null);
+
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, R.string.err_not_number, Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+

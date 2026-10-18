@@ -84,6 +84,21 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="@string/op_div" />
+            <Button
+                android:id="@+id/btnPhanTram"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:text="@string/op_percent" />
+
+            <Button
+                android:id="@+id/btnDaoDau"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:text="@string/op_negate" />
         </LinearLayout>
 
         <TextView
